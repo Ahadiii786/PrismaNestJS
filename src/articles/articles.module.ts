@@ -4,6 +4,7 @@ import { ArticlesController } from './articles.controller';
 import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Module({
+  imports: [PrismaModule], // Import PrismaModule
   controllers: [ArticlesController],
   providers: [ArticlesService],
 })
