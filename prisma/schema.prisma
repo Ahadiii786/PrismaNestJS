@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+    output   = "./node_modules/@prisma/client"
 }
 
 datasource db {
@@ -22,4 +23,16 @@ model Article {
   published   Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+    author      User?    @relation(fields: [authorId], references: [id])
+  authorId    Int?     // Make this field optional
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String?
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  articles  Article[]
 }

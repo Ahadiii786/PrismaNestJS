@@ -7,7 +7,9 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class ArticlesService {
   findDrafts() {
-    throw new Error('Method not implemented.');
+    return this.prisma.article.findMany({
+      where: { published: false }, // Fetch articles where `published` is false
+    });
   }
   constructor(private prisma: PrismaService) {}
 
@@ -20,7 +22,12 @@ export class ArticlesService {
   }
 
   findOne(id: number) {
-    return this.prisma.article.findUnique({ where: { id } });
+    return this.prisma.article.findUnique({
+      where: { id },
+      include: {
+        author: true,
+      },
+    });
   }
 
   update(id: number, updateArticleDto: UpdateArticleDto) {
